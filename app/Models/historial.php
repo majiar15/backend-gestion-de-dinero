@@ -12,5 +12,7 @@ class historial extends Model
         'operacion',
         'mensaje',
         'valor',
+        'cartera_id',
     ];
+    public $table = "history";
 }

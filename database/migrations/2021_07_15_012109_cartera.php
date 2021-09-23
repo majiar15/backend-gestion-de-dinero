@@ -18,8 +18,9 @@ class Cartera extends Migration
             $table->id();
             $table->string('name');
             $table->bigInteger('cantidad');
-            $table->bigInteger('users_id')->unsigned();
-            $table->foreign('users_id')->references('id')->on('users');
+            $table->bigInteger('user_id')->unsigned();
+            $table->softDeletes();
+            $table->foreign('user_id')->references('id')->on('users');
             
         });
     }
