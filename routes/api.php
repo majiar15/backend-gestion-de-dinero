@@ -42,7 +42,7 @@ Route::group([
 ],
     function(){
         // obtener todas las carteras de un usuario
-        Route::get('', [CarteraController::class, 'getAll']);
+        Route::get('/get/{id}', [CarteraController::class, 'getAll']);
 
         // crear cartera
         Route::post('/create', [CarteraController::class, 'create']);

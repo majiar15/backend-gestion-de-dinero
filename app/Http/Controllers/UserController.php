@@ -16,6 +16,7 @@ class UserController extends Controller
         $request->all()
         ,[ 
             'name' => 'required|string',
+            'last_name' => 'string',
             'email' => 'required|string|email|unique:users',
             'password' => 'required|string'
         ]);
@@ -78,8 +79,9 @@ class UserController extends Controller
         $token->save();
 
         return response()->json([
-            'access_token' => $tokenResult->accessToken,
+            'token' => $tokenResult->accessToken,
             'token_type' => 'Bearer',
+            'user' => $user,
             'expires_at' => Carbon::parse($token->expires_at)->toDateTimeString()
         ]);
     }

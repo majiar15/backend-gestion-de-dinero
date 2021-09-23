@@ -11,20 +11,15 @@ use Illuminate\Http\Request;
 
 class CarteraController extends Controller
 {
-    public function getAll(Request $request)
+    public function getAll($id)
     {
-        $id = $request["id"];
-        $validator = Validator::make($request->all(), [
-            'id' => 'required|int|max:255',
-        ]);
-        if ($validator->fails()) {
-
-            return response()->json(
-                $validator->errors()->toJson(),
-                400
-            );
+        $cartera = Cartera::where('user_id', $id)->get();
+        if(is_null($cartera)){
+            return response()->json([
+                'messages' => 'no hay usuario con id '.$id
+            ]);
         }
-        return Cartera::where('user_id', $id)->get();
+        return $cartera;
     }
     public function create(Request $request)
     {
@@ -142,7 +137,6 @@ class CarteraController extends Controller
     public function deposit(Request $request){
         $validator = Validator::make($request->all(), [
             'id' => 'required|int',
-            'nombre' => 'required|string',
             'cantidad' => 'required|int',
             'mensaje' => 'string',
         ]);   
@@ -168,7 +162,7 @@ class CarteraController extends Controller
             return response()->json([
                 'message' => 'no se pudo enocntrar la cartera con id '.$id,
                 'cartera' => $cartera,
-            ]);
+            ],404);
         }else{
             $cartera->cantidad += $cantidad;
             $historial = new historial;
